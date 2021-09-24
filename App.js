@@ -1,13 +1,26 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Login from './screens/Login';
 
+
+const Stack = createNativeStackNavigator();
+const gloabalScreenOptions = {
+  headerStyle : {backgroundColor : "#2C6BED"} , 
+  headerTitleStyle : {color : 'white'} ,
+  headerTintColor : "white",
+}
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={gloabalScreenOptions}>
+    
+      <Stack.Screen name='Login' component={ Login}/>
+      </Stack.Navigator>
+    </NavigationContainer>
+
   );
 }
 
