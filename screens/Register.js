@@ -34,7 +34,7 @@ const Register = ({ navigation }) => {
             style={styles.container}
         >
             <StatusBar style="light" />
-            <Text h3 style={{ marginBottom: 50 }}>
+            <Text h3 style={{ marginBottom: 20 }}>
                 Create a Signal account
             </Text>
             <View style={styles.inputContainer}>
