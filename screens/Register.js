@@ -18,15 +18,15 @@ const Register = ({ navigation }) => {
     }, [navigation])
 
     const register = () => {
-       auth.createUserWithEmailAndPassword(email,password) 
-       .then((authUser) => {
-           authUser.user.updateProfile({
-               displayName : name ,
-               photoURL : imageUrl || 
-               "https://avatars.githubusercontent.com/u/49190728?s=96&v=4",
-           });
-       })
-       .catch((error) => alert(error.message));
+        auth.createUserWithEmailAndPassword(email, password)
+            .then((authUser) => {
+                authUser.user.updateProfile({
+                    displayName: name,
+                    photoURL: imageUrl ||
+                        "https://avatars.githubusercontent.com/u/49190728?s=96&v=4",
+                });
+            })
+            .catch((error) => alert(error.message));
     }
     return (
         <KeyboardAvoidingView
