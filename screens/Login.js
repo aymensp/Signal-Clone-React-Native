@@ -12,12 +12,12 @@ const Login = ({ navigation }) => {
     const [password, setPassword] = useState('')
 
     useEffect(() => {
-       const unsebscribe =  auth.onAuthStateChanged((authUser) => {
+        const unsebscribe = auth.onAuthStateChanged((authUser) => {
             if (authUser) {
                 navigation.replace("Home")
             }
         })
-        return unsebscribe ;
+        return unsebscribe;
     }, [])
 
     const signIn = () => {

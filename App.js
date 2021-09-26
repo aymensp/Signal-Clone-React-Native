@@ -16,7 +16,6 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Home"
         screenOptions={gloabalScreenOptions}
       >
         <Stack.Screen name='Login' component={Login} />

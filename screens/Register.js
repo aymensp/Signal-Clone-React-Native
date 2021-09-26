@@ -20,10 +20,10 @@ const Register = ({ navigation }) => {
     const register = () => {
        auth.createUserWithEmailAndPassword(email,password) 
        .then((authUser) => {
-           authUser.user.update({
+           authUser.user.updateProfile({
                displayName : name ,
                photoURL : imageUrl || 
-               "https://cencup.com/wp-content/uploads/2019/07/avatar-placeholder.png",
+               "https://avatars.githubusercontent.com/u/49190728?s=96&v=4",
            });
        })
        .catch((error) => alert(error.message));
