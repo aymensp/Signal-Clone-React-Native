@@ -1,11 +1,22 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import React ,{useLayoutEffect}from 'react'
+import { ScrollView, StyleSheet, SafeAreaView, View } from 'react-native'
+import CustomListItem from '../components/CustomListItem'
 
-const Home = () => {
+const Home = ({navigation}) => {
+    useLayoutEffect(() => {
+   navigation.setOptions({
+       title: "Signal",
+       
+   })
+    }, [])
     return (
-        <View>
-            <Text>Hey nikomek</Text>
-        </View>
+        <SafeAreaView>
+            <ScrollView>
+                <CustomListItem 
+                
+                />
+            </ScrollView>
+        </SafeAreaView>
     )
 }
 
