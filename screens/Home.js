@@ -1,9 +1,10 @@
-import React, { useLayoutEffect } from 'react'
+import React, { useLayoutEffect, useState, useEffect } from 'react'
 import { ScrollView, StyleSheet, SafeAreaView, View, TouchableOpacity, TextInput } from 'react-native'
 import { Avatar, Input } from 'react-native-elements'
 import CustomListItem from '../components/CustomListItem'
 import { auth } from '../firebase'
 import { AntDesign, SimpleLineIcons } from "@expo/vector-icons"
+import { db } from '../firebase'
 
 const Home = ({ navigation }) => {
     const SignOut = () => {
@@ -11,6 +12,16 @@ const Home = ({ navigation }) => {
             navigation.replace("Login");
         });
     }
+    const [chats, setchats] = useState([])
+    useEffect(() => {
+        const unsubscribe = db.collection('chats').onSnapshot(snapshot => (
+            setchats(snapshot.docs.map((doc) => ({
+                id: doc.id,
+                data: doc.data(),
+            })))
+        ))
+        return unsubscribe;
+    }, [])
 
     useLayoutEffect(() => {
         navigation.setOptions({
@@ -45,15 +56,21 @@ const Home = ({ navigation }) => {
                         <AntDesign name='camerao' size={24} color="black" />
                     </TouchableOpacity>
                     <TouchableOpacity
-                     activeOpacity={0.5}
-                     onPress={()=>navigation.navigate("AddChat")}
-                     >
+                        activeOpacity={0.5}
+                        onPress={() => navigation.navigate("AddChat")}
+                    >
                         <SimpleLineIcons name='pencil' size={22} color="black" />
                     </TouchableOpacity>
                 </View>
             )
         })
     }, [navigation])
+    const enterChat = (id, chatName) => {
+        navigation.navigate("Chat", {
+            id,
+            chatName,
+        })
+    }
     return (
         <SafeAreaView>
             <View style={{ backgroundColor: "white" }}>
@@ -66,9 +83,15 @@ const Home = ({ navigation }) => {
                     />
                 </View>
             </View>
-            <ScrollView>
-                <CustomListItem
-                />
+            <ScrollView style={styles.list}>
+                {chats?.map(({ id, data: { chatName } }) => (
+                    <CustomListItem
+                        id={id}
+                        chatName={chatName}
+                        enterChat={enterChat}
+                    />
+                ))}
+
             </ScrollView>
         </SafeAreaView>
     )
@@ -92,5 +115,8 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         padding: 5,
+    },
+    list: {
+        height: "100%"
     }
 })
