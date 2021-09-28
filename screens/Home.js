@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useState, useEffect } from 'react'
-import { ScrollView, StyleSheet, SafeAreaView, View, TouchableOpacity, TextInput } from 'react-native'
+import { ScrollView, StyleSheet, SafeAreaView, View, TouchableOpacity, TextInput, StatusBarIOS, StatusBar } from 'react-native'
 import { Avatar, Input } from 'react-native-elements'
 import CustomListItem from '../components/CustomListItem'
 import { auth } from '../firebase'
@@ -26,13 +26,14 @@ const Home = ({ navigation }) => {
     useLayoutEffect(() => {
         navigation.setOptions({
             title: "Signal",
-            headerStyle: { backgroundColor: "#fff" },
+            headerStyle: { backgroundColor: "#fff", elevation: 0, shadowColor: 'transparent' },
             headerTitleStyle: { color: "black" },
             headerLeft: () => (
                 <View >
                     <TouchableOpacity
                         activeOpacity={0.5}
                         onPress={SignOut}
+                        style={{ marginLeft: 10 }}
                     >
                         <Avatar
                             rounded
@@ -50,6 +51,7 @@ const Home = ({ navigation }) => {
                     flexDirection: "row",
                     justifyContent: "space-between",
                     width: 70,
+                    marginRight: 10
 
                 }}>
                     <TouchableOpacity activeOpacity={0.5}>
@@ -72,7 +74,9 @@ const Home = ({ navigation }) => {
         })
     }
     return (
-        <SafeAreaView>
+
+        <SafeAreaView >
+            <StatusBar barStyle="dark-content" />
             <View style={{ backgroundColor: "white" }}>
                 <View style={styles.inputLabel}>
                     <AntDesign name='search1' size={20} color="gray" />
@@ -86,6 +90,7 @@ const Home = ({ navigation }) => {
             <ScrollView style={styles.list}>
                 {chats?.map(({ id, data: { chatName } }) => (
                     <CustomListItem
+                        key={id}
                         id={id}
                         chatName={chatName}
                         enterChat={enterChat}
@@ -94,6 +99,7 @@ const Home = ({ navigation }) => {
 
             </ScrollView>
         </SafeAreaView>
+
     )
 }
 

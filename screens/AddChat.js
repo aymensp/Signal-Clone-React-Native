@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { StatusBar, StyleSheet, Text, View } from 'react-native'
 import { Button, Icon, Input } from 'react-native-elements'
 import { db } from '../firebase'
 
@@ -23,6 +23,8 @@ const AddChat = ({ navigation }) => {
     const [input, setInput] = useState("")
     return (
         <View style={styles.container}>
+            <StatusBar barStyle="light-content" />
+
             <Input
                 placeholder="Enter z chat name"
                 value={input}

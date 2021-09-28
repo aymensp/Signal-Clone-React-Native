@@ -1,14 +1,14 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import { NavigationContainer  } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import Login from './screens/Login';
 import Register from './screens/Register';
 import Home from './screens/Home';
 import AddChat from './screens/AddChat';
 import Chat from './screens/Chat';
+import { NavigationContainer } from '@react-navigation/native';
 
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
 const gloabalScreenOptions = {
   headerStyle: { backgroundColor: "#2C6BE0" },
   headerTitleStyle: { color: 'white' },
