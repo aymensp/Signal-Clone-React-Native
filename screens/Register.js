@@ -23,7 +23,7 @@ const Register = ({ navigation }) => {
                 authUser.user.updateProfile({
                     displayName: name,
                     photoURL: imageUrl ||
-                        "https://avatars.githubusercontent.com/u/49190728?s=96&v=4",
+                        "https://toppng.com/uploads/preview/roger-berry-avatar-placeholder-11562991561rbrfzlng6h.png",
                 });
             })
             .catch((error) => alert(error.message));

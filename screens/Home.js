@@ -41,7 +41,9 @@ const Home = ({ navigation }) => {
                                 uri: auth?.currentUser?.photoURL
                             }}
 
-                        />
+                        >
+                            
+                        </Avatar>
                     </TouchableOpacity>
 
                 </View>
