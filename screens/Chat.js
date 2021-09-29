@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useState, useRef } from 'react'
 import { Keyboard, KeyboardAvoidingView, Platform, ScrollView, StatusBar, TouchableOpacity, TouchableWithoutFeedback } from 'react-native'
 import { StyleSheet, Text, View } from 'react-native'
 import { Avatar } from 'react-native-elements/dist/avatar/Avatar'
@@ -10,6 +10,7 @@ import firebase from "firebase"
 const Chat = ({ navigation, route }) => {
     const [input, setinput] = useState("")
     const [messages, setMessages] = useState([])
+    const scrollViewRef = useRef();
     useLayoutEffect(() => {
         navigation.setOptions({
             headerBackTitleVisible: false,
@@ -48,12 +49,12 @@ const Chat = ({ navigation, route }) => {
                     alignItems: "center",
                 }}>
 
-                    <Avatar 
-                    rounded 
-                    source={{
-                        
-                        uri: messages[(messages).length-1]?.data.photoUrl || "https://toppng.com/uploads/preview/roger-berry-avatar-placeholder-11562991561rbrfzlng6h.png"
-                    }} 
+                    <Avatar
+                        rounded
+                        source={{
+
+                            uri: messages[(messages).length - 1]?.data.photoUrl || "https://toppng.com/uploads/preview/roger-berry-avatar-placeholder-11562991561rbrfzlng6h.png"
+                        }}
 
                     />
                     <Text
@@ -62,18 +63,22 @@ const Chat = ({ navigation, route }) => {
                 </View>
             )
         })
-    }, [navigation,messages])
+    }, [navigation, messages])
 
     const sendMessage = () => {
-        Keyboard.dismiss();
-        db.collection("chats").doc(route.params.id).collection("messages").add({
-            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-            message: input,
-            displayName: auth.currentUser.displayName,
-            email: auth.currentUser.email,
-            photoUrl: auth.currentUser.photoURL
-        })
-
+        if (!input) {
+            alert("hnin ekteb message")
+        }
+        else {
+            Keyboard.dismiss();
+            db.collection("chats").doc(route.params.id).collection("messages").add({
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                message: input,
+                displayName: auth.currentUser.displayName,
+                email: auth.currentUser.email,
+                photoUrl: auth.currentUser.photoURL
+            })
+        }
         setinput('');
 
     }
@@ -88,27 +93,32 @@ const Chat = ({ navigation, route }) => {
                     id: doc.id,
                     data: doc.data()
                 }))
-            ))
+            ));
+
+        scrollViewRef.current.scrollToEnd()
 
         return unsubscribe;
     }, [])
-    console.log(messages)
+
     return (
 
         <View style={{ flex: 1, backgroundColor: "white" }}>
 
             <StatusBar barStyle="light-content" />
             <KeyboardAvoidingView
-                behavior={Platform.OS === "ios" ? "padding" : "height"}
+                behavior="padding"
                 style={styles.container}
                 keyboardVerticalOffset={90}
             >
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
                     <>
                         <ScrollView
-                        contentContainerStyle={{
-                            paddingTop:15
-                        }}
+
+                            ref={scrollViewRef}
+                            onContentSizeChange={() => scrollViewRef.current.scrollToEnd()}
+                            contentContainerStyle={{
+                                paddingTop: 15
+                            }}
                         >
                             {messages.map(({ id, data }) => (
                                 data.email === auth.currentUser.email ? (
@@ -155,7 +165,7 @@ const Chat = ({ navigation, route }) => {
                         <View style={styles.footer}>
                             <TouchableOpacity
                                 activeOpacity={0.5}
-                                onPress={sendMessage}>
+                            >
                                 <Ionicons
                                     name="add"
                                     size={30}
@@ -172,7 +182,7 @@ const Chat = ({ navigation, route }) => {
                             />
                             <TouchableOpacity
                                 activeOpacity={0.5}
-                                onPress={sendMessage}>
+                            >
                                 <Ionicons
                                     name="camera-outline"
                                     size={30}
@@ -201,7 +211,6 @@ export default Chat
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-
     },
     footer: {
         flexDirection: "row",
@@ -209,7 +218,9 @@ const styles = StyleSheet.create({
         width: "100%",
         backgroundColor: "#f5f5f5",
         height: 80,
-        padding: 10
+        padding: 10,
+        bottom: 0
+
     },
     textInput: {
         height: 40,

@@ -26,7 +26,7 @@ const AddChat = ({ navigation }) => {
             <StatusBar barStyle="light-content" />
 
             <Input
-                placeholder="Enter z chat name"
+                placeholder="Enter a chat name"
                 value={input}
                 onChangeText={(text) => setInput(text)}
                 onSubmitEditing={createChat}
@@ -40,7 +40,7 @@ const AddChat = ({ navigation }) => {
                 }
 
             />
-            <Button onPress={createChat} title="Create new chat" />
+            <Button disabled={!input} onPress={createChat} title="Create new chat" />
         </View>
     )
 }
