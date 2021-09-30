@@ -28,7 +28,7 @@
  
  
 ### Link For The APP
-[gmail-clone :](https://signal-clone-64922.web.app) https://signal-clone-64922.web.app
+[signal-clone :](https://signal-clone-64922.web.app) https://signal-clone-64922.web.app
 
 ### Used Technologies
 
